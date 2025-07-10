@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Seller Sign Up - Khaleed Interiors</title>
+  <link href="assets/bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">Khaleed Interiors</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="buyerdashboard.html">buyerDashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+        <li class="nav-item"><a class="nav-link" href="buy.html">Buy</a></li>
+        <li class="nav-item"><a class="nav-link" href="sellerdashboard.html">sellerdashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="sellersignup.html">sellersignup</a></li>
+        <li class="nav-item"><a class="nav-link" href="sellerlogin.html">Logout</a></li>
+      </ul>
+    </nav>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Seller Sign Up</h2>
+    <form id="signupForm" class="mx-auto" style="max-width: 400px;">
+      <div class="mb-3">
+        <label for="fullname" class="form-label">Full Name</label>
+        <input type="text" id="fullname" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+      <p class="mt-3 text-center">Already have an account? <a href="sellerlogin.html">Login</a></p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const fullname = document.getElementById("fullname").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const seller = {
+        fullname,
+        email,
+        password,
+        products: [],
+        orders: []
+      };
+
+      localStorage.setItem("seller_" + email, JSON.stringify(seller));
+      alert("Signup successful! Please log in.");
+      window.location.href = "sellerlogin.html";
+    });
+  </script>
+</body>
+</html>
