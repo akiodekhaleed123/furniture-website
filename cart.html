@@ -125,19 +125,5 @@
   </script>
 </body>
 </html>
-
-<button class="btn btn-outline-primary w-100" onclick='addToCart(${JSON.stringify(product)}, "${seller.email}")'>Add to Cart</button>
-
 <script>
-  function addToCart(product, sellerEmail) {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-
-    cart.push({
-      ...product,
-      sellerEmail
-    });
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Product added to cart!");
-  }
-</script>
+  

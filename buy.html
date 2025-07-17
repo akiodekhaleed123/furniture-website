@@ -65,7 +65,7 @@
                 <p><strong>Category:</strong> ${product.category}</p>
                 <p><strong>Material:</strong> ${product.material}</p>
                 <p>${product.caption}</p>
-                <button class="btn btn-success w-100" onclick='orderProduct(${JSON.stringify(product)}, "${seller.email}")'>Order</button>
+                <button class="btn btn-outline-primary w-100" onclick='addToCart(${JSON.stringify(product)}, "${seller.email}")'>Add to Cart</button>
               </div>
             </div>
           `;
@@ -74,37 +74,22 @@
       });
     }
 
-    function orderProduct(product, sellerEmail) {
-      const buyerName = prompt("Enter your name to order:");
-      if (!buyerName) return;
+    function addToCart(product, sellerEmail) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-      const order = {
-        buyer: buyerName,
-        productId: product.id,
-        status: "pending",
-        timestamp: new Date().toISOString()
-      };
+      const exists = cart.some(item => item.id === product.id && item.sellerEmail === sellerEmail);
+      if (exists) {
+        alert("This product is already in your cart.");
+        return;
+      }
 
-      const sellerKey = "seller_" + sellerEmail;
-      const seller = JSON.parse(localStorage.getItem(sellerKey));
-
-      const targetProduct = seller.products.find(p => p.id === product.id);
-      if (!targetProduct.orders) targetProduct.orders = [];
-      targetProduct.orders.push(order);
-
-      localStorage.setItem(sellerKey, JSON.stringify(seller));
-
-      // Save to buyer's order history
-      const buyerOrders = JSON.parse(localStorage.getItem("buyerOrders") || "[]");
-      buyerOrders.push({
-        ...order,
-        productName: product.name,
-        sellerEmail,
-        price: product.price
+      cart.push({
+        ...product,
+        sellerEmail
       });
-      localStorage.setItem("buyerOrders", JSON.stringify(buyerOrders));
 
-      alert("Order placed successfully!");
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Product added to cart!");
     }
 
     loadProducts();
